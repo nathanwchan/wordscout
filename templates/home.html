@@ -1,0 +1,14 @@
+<!doctype html>
+<title>WordScout</title>
+<form method="post">
+  <input type=text name=search_term>
+  <input type=submit value=Search>
+</form>
+{% if video_urls %}
+  <h1>showing results for: {{ search_term }}</h1>
+  {% for video_url in video_urls %}
+    <iframe width="420" height="315" src="{{ video_url }}"></iframe>
+  {% endfor %}
+{% else %}
+  <h1>no results for: {{ search_term }}</h1>
+{% endif %}
