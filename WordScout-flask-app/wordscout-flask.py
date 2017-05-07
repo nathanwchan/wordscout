@@ -56,7 +56,7 @@ def get_authenticated_service():
 # tab of
 #   https://cloud.google.com/console
 # Please ensure that you have enabled the YouTube Data API for your project.
-DEVELOPER_KEY = "AIzaSyAd-WRB5F4YgO4r-pxtED6im3XtcO2daig"
+DEVELOPER_KEY = "AIzaSyCvnft_5siETbjUyq8qyIuPHzM6s75Owk4"
 YOUTUBE_READ_WRITE_SSL_SCOPE = "https://www.googleapis.com/auth/youtube.force-ssl"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
@@ -143,31 +143,41 @@ def wordscout(search_term=None):
     search_term = request.form['search_term']
     return redirect('/%s' % search_term)
 
+  video_urls = ["https://www.youtube.com/embed/nlODa5QOm3Y?cc_load_policy=1&cc_lang_pref=en&start=75",
+                "https://www.youtube.com/embed/8vogXQaGp5M?cc_load_policy=1&cc_lang_pref=en&start=68",
+                "https://www.youtube.com/embed/v-FhAKwbELU"]
+  return render_template('home.html',
+			 search_term=search_term,
+			 video_urls=video_urls)
+
   #search_terms = ['kick the bucket', 'spill the beans', 'hot potato', 'insult to injury', 'drop of a hat', 'back to the drawing board', 'beat around the bush', 'costs an arm and a leg', '"far cry from"', 'benefit of the doubt', 'hit the nail on the head', 'in the heat of the moment', 'jump on the bandwagon', 'miss the boat', 'on the ball', 'once in a blue moon', 'piece of cake', 'sit on the fence', 'take it with a grain of salt', 'whole nine yards', "wouldn't be caught dead", 'bucket list', 'up in the air', 'out of woods']
   #search_terms = ['a dime a dozen', 'chip on your shoulder', 'picture paints a thousand words', 'slap on the wrist', 'taste of your own medicine', 'a toss up', 'actions speak louder than words', 'add fuel to the fire', 'against the clock', 'all in the same boat', 'axe to grind', 'apple of my eye', "baker's dozen", 'back to square one', 'beat a dead horse', 'between a rock and a hard place', 'bite your tongue', 'break a leg', 'crack someone up', 'cup of joe', 'cut to the chase', "devil's advocate", 'down to the wire', 'dry run', 'drop like flies', 'pardon my french', 'field day', "fool's errand", 'rags to riches', 'full monty', 'go the extra mile', 'go out on a limb', 'good samaritan', 'gut feeling', 'hit the sack', 'hold your horses', 'icing on the cake', 'in the bag', 'in your face', 'its a small world', 'cat out of the bag', 'level playing field', 'bite the hand that feeds you', 'no dice', 'off on the wrong foot', 'off the hook', 'off the record', 'out of the blue', 'over my dead body', 'over the top', 'rise and shine', 'start from scratch', 'tie the knot', 'tongue in cheek', 'turn a blind eye', 'under the weather', 'when pigs fly', 'judge a book by its cover']
   #search_terms = ['benefit of the doubt', 'insult to injury', 'beat around the bush', 'devil\'s advocate', 'rise and shine', 'turn a blind eye']
+'''
   #for search_term in search_terms:
   video_urls = []
+  video_ids = []
+  video_ids_seconds_map = {}
   if search_term:
     search_term = str(search_term)
     try:
       video_ids, video_ids_seconds_map = youtube_search(search_term)
     except HttpError, e:
       print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+      video_ids = ["_8qfufCxk40", "X-hs2G33Kvc", "xMYdtZq2bIo"]
 
     #print video_ids_seconds_map
     for video_id in video_ids:
       video_url = "https://www.youtube.com/embed/%s?cc_load_policy=1&cc_lang_pref=en" % video_id
       seconds = video_ids_seconds_map.get(video_id)
       if seconds:
-	video_url += "&start=%s" % seconds
-	video_urls.append(video_url)
-	#print video_url
-      #print "%s %s" % (len(video_urls), search_term)
-
-  return render_template('home.html',
-			 search_term=search_term,
-			 video_urls=video_urls)
+        video_url += "&start=%s" % seconds
+      video_urls.append(video_url)
+        #print video_url
+      if len(video_urls) > 0:
+        print "%s %s" % (len(video_urls), search_term)
+  print video_urls
+'''
 
 if __name__ == "__main__":
   app.run()

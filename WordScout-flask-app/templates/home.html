@@ -5,40 +5,58 @@
 <style>
 @font-face {
     font-family: nexa-bold;
-    src: url("Nexa-Bold.otf") format("opentype");
+    src: url({{url_for('static', filename="Nexa-Bold.otf")}}) format("opentype");
 }
 @font-face {
     font-family: nexa-light;
-    src: url("Nexa-Light.otf") format("opentype");
+    src: url({{url_for('static', filename="Nexa-Light.otf")}}) format("opentype");
+}
+
+img:hover {
+    cursor: pointer;
 }
 </style>
+<script>
+function clickImage(img)
+{
+    img.src = "{{url_for('static', filename='3_star_rating.svg')}}"
+}
+</script>
 </head>
+
+<img src="{{url_for('static', filename='logo.svg')}}" height="30px" style="padding-left: 50px; margin-top: 20px;" />
+<div style="padding-left:50px; padding-top:50px; padding-right:50px">
 <!--
 <form method="post">
   <input type=text name=search_term>
   <input type=submit value=Search>
 </form>
 -->
-{% if video_urls %}-->
+{% if video_urls %}
 
   <!--<h1>showing results for: {{ search_term }}</h1>-->
   <div style="width:100%;margin:0 auto">
-  {% for video_url in video_urls %}
-  <div style="height:415;width:33%;display:inline-block;">
-    <iframe style="height:315" src="{{ video_url }}"></iframe>
+{% for video_url in video_urls %}
+  
+  <div style="height:415px;width:33%;display:inline-block;">
+    <iframe width=420 height=315  src="{{ video_url }}"></iframe>
 	<div style="width:100%;margin:0 auto">
-		<div style="display:inline-block;vertical-align:top"><span style="font-size:30px;font-family:nexa-bold;width:100px;margin-top:10px;display:inline-block"> Rate:</span>
+		<div style="display:inline-block;vertical-align:top"><span style="font-size:15px;font-family:nexa-bold;margin-top:12px;display:inline-block"> Rate:&nbsp;</span>
 		</div>
-		<div style="display:inline-block">
-			<div><img src="3_star_rating.svg" height="50px" width="150px" /></div>
-			<div><span style="color:grey;font-size:11px;font-family:nexa-light">How helpful was this video?</span></div>
+		<div style="display:inline-block; margin-top:8px">
+			<div>
+                <img src="{{url_for('static', filename='no_star_rating.svg')}}" height="20px" width="100px" onclick="clickImage(this)" />
+            </div>
+			<div style="margin-top:-10px"><span style="color:grey;font-size:8px;font-family:nexa-light">How helpful was this video?</span></div>
 		</div>
-	</div>
-	
+	</div>	
    </div>
+   
   
   {% endfor %}
   </div>
 {% else %}
   <h1>no results for: {{ search_term }}</h1>
 {% endif %}
+
+</div>
